@@ -6,14 +6,14 @@ line_cnt = total_PL  = first_mnth_PL = last_month_PL = 0
 grt_Increase = grt_decrease = 0
 grt_Inc_month = grt_Decr_month = ""
 
+results = []
+
 # Open the file where the result of analysis should be written in 'write' mode 
-outputFile = open("pyBank_Analysis.txt","w")
+outputFile = open("pyBank_Analysis.txt",mode = "w", newline = "\r\n")
 
 # Print and output to file the header for analysis
-print("Financial Analysis")
-outputFile.write("Financial Analysis" + "\n")
-print("----------------------------------------------------------")
-outputFile.write("----------------------------------------------------------" + "\n")
+results.append("Financial Analysis")
+results.append("----------------------------------------------------------")
 
 # read csv file through a csv.dictreader and store it in a dictionary
 with open("budget_data.csv", mode="r") as csv_file:
@@ -22,8 +22,7 @@ with open("budget_data.csv", mode="r") as csv_file:
 	dataLines = csv_file.readlines()
 
 	#print and output the total months of data available in csv file excl. the header row
-	print(f"Total Months: {len(dataLines)-1}") 
-	outputFile.write("Total Months:" + " " + str(len(dataLines)-1) + "\n")
+	results.append("Total Months:" + " " + str(len(dataLines)-1))
 
 	# reset file pointer to begining of the file
 	csv_file.seek(0)
@@ -54,18 +53,19 @@ with open("budget_data.csv", mode="r") as csv_file:
 	# get the average change in P & L across months 
 	avg_chng = round((last_month_PL - first_mnth_PL) / (line_cnt-1),2)
 	
-	# print & output to file all the values calculated
-	print(f"Total: ${round(total_PL)}")
-	outputFile.write("Total:" + " $" + str(round(total_PL)) + "\n")
+	# add all the results to resultList
+	results.append("Total:" + " $" + str(round(total_PL)))
 	
-	print(f"Average Change : ${avg_chng}")
-	outputFile.write("Average Change:" + " $" + str(avg_chng) + "\n")
+	results.append("Average Change:" + " $" + str(avg_chng))
 
-	print(f"Greatest Increase in Profits: {grt_Inc_month} (${round(grt_Increase)})")
-	outputFile.write("Greatest Increase in Profits:" + " " + str(grt_Inc_month) + " " + "($" + str(round(grt_Increase)) + ")" "\n")
+	results.append("Greatest Increase in Profits:" + " " + str(grt_Inc_month) + " " + "($" + str(round(grt_Increase)) + ")")
 
-	print(f"Greatest Decrease in Profits: {grt_Decr_month} (${round(grt_decrease)})")
-	outputFile.write("Greatest Decrease in Profits:" + " " + str(grt_Decr_month) + " " + "($" + str(round(grt_decrease)) + ")" "\n")
+	results.append("Greatest Decrease in Profits:" + " " + str(grt_Decr_month) + " " + "($" + str(round(grt_decrease)) + ")")
+
+	# print & output to file all the values calculated
+	for r in results:
+		print(r)
+		outputFile.write(r + "\r\n")
 
 	# close the csv and txt files
 	outputFile.close()
