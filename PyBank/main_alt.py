@@ -7,6 +7,7 @@ grt_Increase = grt_decrease = 0
 grt_Inc_month = grt_Decr_month = ""
 
 results = []
+d = {}
 
 # Open the file where the result of analysis should be written in 'write' mode 
 outputFile = open("pyBank_Analysis.txt",mode = "w", newline = "\r\n")
@@ -18,17 +19,8 @@ results.append("----------------------------------------------------------")
 # read csv file through a csv.dictreader and store it in a dictionary
 with open("budget_data.csv", mode="r") as csv_file:
 	
-	# Read the total number of lines in the CSV data file
-	dataLines = csv_file.readlines()
-
-	#print and output the total months of data available in csv file excl. the header row
-	results.append("Total Months:" + " " + str(len(dataLines)-1))
-
-	# reset file pointer to begining of the file
-	csv_file.seek(0)
-
-	# Store the csv data into dictReader Dictionary
-	csv_data = csv.DictReader(csv_file)
+	#Store the csv data into dictReader Dictionary
+	csv_data = csv.reader(csv_file)
 
 	# Loop to get total profits/losses, first month PL, last month PL, greatest Increase in Profit and greatest decrease in profit
 	for row in csv_data:
