@@ -1,13 +1,23 @@
-# Import library CSV for reading / writing csv
+# This Python script analyzes the records of budget_Data.csv to calculate each of the following:
+	# The total number of months included in the dataset
+	# The total net amount of "Profit/Losses" over the entire period
+	# The average change in "Profit/Losses" between months over the entire period
+	# The greatest increase in profits (date and amount) over the entire period
+	# The greatest decrease in losses (date and amount) over the entire period
+
+# Import library CSV for reading / writing csv and os lib for file operations
 import csv
 import os
 
 # Set all variables to default values
 line_cnt = total_PL  = first_mnth_PL = last_month_PL = dif_val = 0
-avgChng_monthly = {}
 max_Increase = min_Increase = 0
 max_Inc_month = min_Incr_month = ""
 
+# this dictionary captures all monthly avg changes
+avgChng_monthly = {}
+
+# this list captures the output of the analysis
 results = []
 
 # Define the data file and output file for results
@@ -22,9 +32,12 @@ with open(dataFile, mode="r") as csv_file:
 
 	# Loop to get Sum of profits/losses, # of months and monthly change of profit/losses
 	for row in csv_data:
+		# when on the first row after header, capture the first month P&L
 		if(line_cnt == 0):
 			dif_val = float(row["Profit/Losses"])
 		else:
+			# calculate monthly P&L difference ie. Feb'10 - Jan'10 difference in P/L
+			#store in avgChng_monthly dict
 			dif_val = float(row["Profit/Losses"]) - dif_val
 			avgChng_monthly[row["Date"]] = dif_val
 			dif_val = float(row["Profit/Losses"])
@@ -34,7 +47,7 @@ with open(dataFile, mode="r") as csv_file:
 		# calculate total Profits/Losses over months
 		total_PL += float(row["Profit/Losses"])
 
-csv_file.close()
+csv_file.close() # close the budget_data.csv file
 
 # get the average change in P & L across months 
 # the dict avgChng_monthly stores the profit/losses change over months

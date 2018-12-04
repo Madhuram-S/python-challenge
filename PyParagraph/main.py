@@ -31,6 +31,8 @@ for p in txtToAnalyse:
 	fileObj.close()
 
 	# split txt into senences
+	para1 = para.replace("\'")
+
 	sentences = re.split("(?<=[.!?]) +", para, re.M)
 	wordCnt = sum([wrdCnt(t) for t in sentences])
 

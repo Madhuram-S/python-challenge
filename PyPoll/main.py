@@ -1,4 +1,11 @@
-#Import csv package for reading and writing into files
+# This Python script that analyzes the votes in te file election_data.csv and calculates each of the following:
+	# The total number of votes cast
+	# A complete list of candidates who received votes
+	# The percentage of votes each candidate won
+	# The total number of votes each candidate won
+	# The winner of the election based on popular vote.
+
+#Import csv package for reading and writing into files and os for directory operations
 import csv
 import os
 
@@ -10,7 +17,7 @@ outputFile = os.path.join(os.path.dirname(__file__),"electionResults.txt")
 #Declare variables that will be used for calculations
 candidates = {} # a dictionary to store the candidates and votes
 totalVotes = 0
-results = [] # list that will store text for printing
+results = [] # list that will store text for printing and utput to file
 
 #open the election data file and read through row by row to count total vote, vote by candidate
 with open(dataFile, mode = "r", newline = '') as csv_file:
