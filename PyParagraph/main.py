@@ -16,38 +16,45 @@ wcnt = 0
 def wrdCnt(txt):
 	return len(txt.split(" "))
 
-#txtToAnalyse = ["raw_data/paragraph_1.txt", "raw_data/paragraph_2.txt"]
-txtToAnalyse = ["raw_data/paragraph_2.txt"]
+txtToAnalyse = ["raw_data/paragraph_1.txt", "raw_data/paragraph_2.txt"]
+#txtToAnalyse = ["raw_data/paragraph_2.txt"]
 
 for p in txtToAnalyse:
 # filename to read data from and file to write the results
 	txtFile = os.path.join(os.path.dirname(__file__), p)
 
-	#para = "Adam Wayne, the conqueror, with his face flung back and his mane like a lion's, stood with his great sword point upwards, the red raiment of his office flapping around him like the red wings of an archangel. And the King saw, he knew not how, something new and overwhelming. The great green trees and the great red robes swung together in the wind. The preposterous masquerade, born of his own mockery, towered over him and embraced the world. This was the normal, this was sanity, this was nature, and he himself, with his rationality, and his detachment and his black frock-coat, he was the exception and the accident a blot of black upon a world of crimson and gold."
+	
 
 	with open(txtFile, "r", newline ='') as fileObj:
 		para = fileObj.read()
 
 	fileObj.close()
 
-	# split txt into senences
-	para1 = para.replace("\'")
+	# replace whitespace chars
+	para1 = re.sub(r'\n\n','', para)	
 
-	sentences = re.split("(?<=[.!?]) +", para, re.M)
+	#Count # of sentences
+	sentences = re.split(r'(?<=[.?!\"]) ?\s*?(?=[A-Z\"])', para1, re.M)
+	
+	#count word in sentences
 	wordCnt = sum([wrdCnt(t) for t in sentences])
 
-	chrCnt_withSpaces = len(para)
-	spacesCnt = para.count(" ")
+	# chrCnt_withSpaces = len(para)
+	# spacesCnt = para.count(" ")
+	# chrCnt_only = chrCnt_withSpaces - spacesCnt
 
-	chrCnt_only = chrCnt_withSpaces - spacesCnt
+	# count letters excluding spaces
+	chrCnt_only = len(re.sub(r"[\s]", "",para))
 
+	#calculate average letter cnt
 	avgLetterCnt = chrCnt_only / wordCnt
 
+	#calculate average word cnt / sentence
 	avgSentLen = wordCnt / len(sentences)
 
-	print(f"Paragraph Analysis for {p}")
-	print("------------------------------------------------------------------")
-	print(para)
+	print(f"Paragraph Analysis for paragraph {p} starting as")
+	print("\n")
+	print(f"{para[0:50]}...")
 	print("------------------------------------------------------------------")
 	print(f"Approximate word count : {wordCnt}")
 	print(f"Approximate Sentence count : {len(sentences)}")
@@ -56,7 +63,7 @@ for p in txtToAnalyse:
 	print("------------------------------------------------------------------")
 
 
-
+	
 
 
 
