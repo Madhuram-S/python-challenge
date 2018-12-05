@@ -1,0 +1,20 @@
+Paragraph Analysis for paragraph raw_data/paragraph_1.txt starting as
+
+
+Gene expression in mammals is regulated by noncodi...
+------------------------------------------------------------------
+Approximate word count : 130
+Approximate Sentence count : 5
+Average letter count (per word) : 6.4
+Average Sentence length : 26.0
+------------------------------------------------------------------
+Paragraph Analysis for paragraph raw_data/paragraph_2.txt starting as
+
+
+When Jackie Chan saw an Oscar at Sylvester Stallon...
+------------------------------------------------------------------
+Approximate word count : 283
+Approximate Sentence count : 9
+Average letter count (per word) : 5.3
+Average Sentence length : 31.4
+------------------------------------------------------------------
